@@ -1,9 +1,4 @@
-import subprocess
-import dnstwist
 import json
-import pandas as pd
-import whois
-import dns.resolver
 import logging
 import os
 import datetime
