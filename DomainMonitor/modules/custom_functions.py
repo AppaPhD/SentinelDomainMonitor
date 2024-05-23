@@ -1,6 +1,5 @@
 import subprocess
 import dnstwist
-import whois
 import dns.resolver
 import logging
 
