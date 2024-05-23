@@ -12,8 +12,8 @@ logger = logging.getLogger(DOMAIN_LOGS['logger'])
 
 # The log type is the name of the event that is being submitted
 log_type = 'DomainMonitor'
-WORKSPACE_ID = AZURE_CONFIG('WorkspaceId')
-WORKSPACE_KEY = AZURE_CONFIG('SharedKey')
+WORKSPACE_ID = AZURE_CONFIG['WorkspaceId']
+WORKSPACE_KEY = AZURE_CONFIG['SharedKey']
 
 # Build the API signature
 def build_signature(customer_id, shared_key, date, content_length, method, content_type, resource):
