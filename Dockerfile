@@ -19,7 +19,6 @@ RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 RUN mkdir -p /usr/DomainMonitor/ /usr/DomainMonitor/logs
 # Install dependencies and configure
 WORKDIR /usr/DomainMonitor/SentinelDomainMonitor
-RUN pip3 install -r requirements.txt
 # Copy application files
 COPY DomainMonitor DomainMonitor/
 COPY requirements.txt .
