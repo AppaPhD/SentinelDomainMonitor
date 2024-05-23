@@ -1,24 +1,13 @@
 # MicrosoftSentinel-DomainMonitor
 Simple python program that takes a list of domains and uses [dnstwist](https://github.com/elceef/dnstwist) to check for active lookalikes with WHOIS enrichment. Designed to be used with Azure Log Analytics and Microsoft Sentinel.
 
-## Table of Contents
-
-* [Run with Azure Containers](#run-with-azure-containers)
-* [Run locally](#run-locally)
-* [Deploy to Azure](#deploy-to-azure)
-
-## Sentinel resources
-Included in this repository are two Microsoft Sentinel resources to help you get started monitoring domains. Check the README files for each for more info:
-- [Playbook Manage-DomainMonitorContainer](./Playbooks/Manage-DomainMonitorContainer/): A playbook that automatically starts the DomainMonitor container once per day
-- [Workbook MicrosoftSentinel-DomainMonitor](./Workbooks/MicrosoftSentinel-DomainMonitor/): A workbook that visualizes the data from the DomainMonitor.
-
 # Run with Azure Containers
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/h0ffayyy/SentinelDomainMonitor/docker-image.yml?logo=docker&logoColor=white&label=ContainerBuildStatus&labelColor=black)
 
 A Dockerfile has been provided to run this in an Azure Container Instance. I also recommend deploying the solution using the provided [ARM template](#deploy-to-azure).
 
 > **Note**
-> Please note that running this in an Azure Container Instance with longer domains is pretty slow. For my website, `aaron-hoffmann.com`, it takes about an hour to complete. For reference, a one or two letter domain only takes a couple mintues, and google.com took about 10 minutes.
+> Please note that running this in an Azure Container Instance with longer domains is pretty slow. For the website, `aaron-hoffmann.com`, it takes about an hour to complete. For reference, a one or two letter domain only takes a couple mintues, and google.com took about 10 minutes.
 
 ![](./images/sentinel-domain-monitor.png)
 
@@ -43,7 +32,7 @@ For full details on getting started with Azure Container Instances, check out th
 
 1. Create a new container instance
 2. Under Image Source, select 'Other'
-3. Enter the value: `h0ffayyy/sentinel-domain-monitor:v1`
+3. Enter the value: `appaphd/dnstwist-dnsx-combo:v1`
 4. Set OS type as Linux
 5. You can use the default size of 1 vCPU and 1.5GB memory
 6. Wait for the container run to complete, and verify you see events in the DomainMonitor_CL Log Analytics table
