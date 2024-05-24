@@ -88,4 +88,7 @@ if __name__ == "__main__":
 
     logger.info(f"Appa-DomainMonitor Ran successfully!!")
 
-
+    delta = datetime.datetime.now() - start_time
+    logger.info(f"Processing took {delta.total_seconds()} seconds")
+    json_log = json.dumps([{'event_type': 'script_status', 'status': f'script completed and took {delta.total_seconds()} seconds'}])
+    LogToAzure.post_data(json_log)
