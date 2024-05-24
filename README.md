@@ -1,20 +1,17 @@
 # MicrosoftSentinel-DomainMonitor
-Simple python program that takes a list of domains and uses [dnstwist](https://github.com/elceef/dnstwist) to check for active lookalikes with WHOIS enrichment. Designed to be used with Azure Log Analytics and Microsoft Sentinel.
+Python and golang program that takes a list of domains and uses [dnstwist](https://github.com/elceef/dnstwist) to check for active lookalikes with WHOIS enrichment. Designed to be used with Azure Log Analytics and Microsoft Sentinel.
 
 # Run with Azure Containers
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/h0ffayyy/SentinelDomainMonitor/docker-image.yml?logo=docker&logoColor=white&label=ContainerBuildStatus&labelColor=black)
 
-A Dockerfile has been provided to run this in an Azure Container Instance. I also recommend deploying the solution using the provided [ARM template](#deploy-to-azure).
-
-> **Note**
-> Please note that running this in an Azure Container Instance with longer domains is pretty slow. For the website, `aaron-hoffmann.com`, it takes about an hour to complete. For reference, a one or two letter domain only takes a couple mintues, and google.com took about 10 minutes.
+A Dockerfile has been provided to run this in an Azure Container Instance.
 
 ![](./images/sentinel-domain-monitor.png)
 
 For full details on getting started with Azure Container Instances, check out the [official documentation](https://learn.microsoft.com/azure/container-instances/container-instances-quickstart-portal).
 
 ## ACI manual setup - Build the image yourself
-<details><summary>Exapnd</summary>
+<details><summary>Expand</summary>
 
 1. Create an Azure Container Registry
 2. Log in to your registry: `az acr login --name <registry-name>`
@@ -28,7 +25,7 @@ For full details on getting started with Azure Container Instances, check out th
 </details>
 
 ## ACI manual setup - Use my DockerHub image
-<details><summary>Exapnd</summary>
+<details><summary>Expand</summary>
 
 1. Create a new container instance
 2. Under Image Source, select 'Other'
@@ -55,26 +52,6 @@ When creating the container, set the following environment variables in the Adva
 If you'd like to automatically start the container, an example [logic app](./Playbooks/Manage-DomainMonitorContainer/) has been included.
 The logic app is set to trigger once a day.
 
-# Run locally
-
-## Requirements
-SentinelDomainMonitor requires the following python packages:
-```
-dnstwist[full]
-logger
-python-whois
-requests
-```
-
-See `requirements.txt`
-
-Additionally, your OS must has a package for `whois`.
-
-- Debian/Ubuntu: `sudo apt install whois`
-
-## Installation
-To install, download the latest release and unzip the contents.
-
 ## Configuration
 Place the domains you want to monitor in the `domains.txt` file, one per line.
 
@@ -86,17 +63,6 @@ Set the following environment variables:
 SentinelDomainMonitor write logs locally to `logs/domain_monitor.log` in the container, and to Log Analytics under the table name "DomainMonitor_CL".
 
 ![](./images/DomainMonitor_logs.png)
-
-# Costs
-Costs will vary based on deployed region, total runtime, etc. Running this once per day with an Azure Container Registry, Azure Container instance, and Logic App in East US is roughly $5-6 USD per month:
-![](./images/DomainMonitor_cost.png)
-
-# Deploy to Azure
-Deploy the entire solution, including workbooks and playbooks using the buttons below:
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fh0ffayyy%2FSentinelDomainMonitor%2Fmaster%2Fazuredeploy.json)
-[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fh0ffayyy%2FSentinelDomainMonitor%2Fmaster%2Fazuredeploy.json)
-
 This template creates the following resources:
 * Azure Container Instance that points to my DockerHub image
 * Storage Account and Blob storage container
