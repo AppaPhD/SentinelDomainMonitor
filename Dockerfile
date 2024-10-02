@@ -27,9 +27,11 @@ RUN mkdir -p /usr/DomainMonitor/ /usr/DomainMonitor/logs
 WORKDIR /usr/DomainMonitor/SentinelDomainMonitor
 # golang dependancies
 COPY go.mod .
-# COPY go.sum .
+COPY go.sum .
 RUN go get -u github.com/quic-go/quic-go
 RUN go mod download
+RUN go mod tidy
+
 # Copy application files
 COPY DomainMonitor DomainMonitor/
 COPY requirements.txt .
@@ -38,4 +40,5 @@ RUN mkdir -p logs
 #install all dependancies
 RUN pip3 install -r requirements.txt
 # Define the command to run the application, need to change this to reflect
-CMD ["python3", "./DomainMonitor/AppaDomainMonitor.py"]
+# CMD ["python3", "./DomainMonitor/AppaDomainMonitor.py"]
+CMD ["cat", "go.mod"]
